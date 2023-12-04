@@ -1,180 +1,430 @@
-class Hotel:
+import pandas as pd
 
-    def __init__(self, quartos_disponiveis):
-        self.quartos_disponiveis = quartos_disponiveis
-
-    def is_quartosdisponiveis(self):
-        if len(quartosDisponiveis) == 0:
-            return True
-        else:
-            return False
-    
-    def reservar_quarto(self, numero_quarto):
-        if numero_quarto in self.quartos_disponiveis:
-            quartosDisponiveis.remove(numero_quarto)
-            quartosIndisponiveis.append(numero_quarto)
-            print("O quarto está disponível para reserva.")
-            reserva = str.lower(input("Deseja reservar o quarto? S/N? \n"))
-            if reserva == ("s"):
-                print("Quarto reservado com sucesso!")
-            else:
-                print("Quarto não reservado.")
-                self.quartos_disponiveis.append(numero_quarto)
-                quartosDisponiveis.sort(key=int)
-        else:
-            print("O quarto não está disponível para ser reservado.")
-            quartosDisponiveis.sort(key=int)
-
-    def liberar_quarto(self, numero_quarto):
-        if quartosDisponiveis.count(numero_quarto) and quartosIndisponiveis.count(numero_quarto) == 0: 
-            print("Não é possivel liberar um quarto que não exista nas nossas instalações")
-        elif numero_quarto in quartosIndisponiveis:
-            quartosIndisponiveis.remove(numero_quarto)
-            quartosDisponiveis.append(numero_quarto)
-            print(f"O quarto {numero_quarto} foi liberado.")
-            quartosDisponiveis.sort(key=int)
-        else:
-            print(f"O quarto {numero_quarto} já está disponível para reserva.")
-
-    def status(self):
-        print(f"O hotel Bedroom Dreams tem {len(self.quartos_disponiveis)} quartos disponíveis.")
-
-class Cliente:
-
-    def __init__(self, nome, idade, sexo, cpf):
+#informações basicas de uma pessoa
+class Pessoa:
+    def __init__(self, nome, idade, email):
         self.nome = nome
         self.idade = idade
-        self.sexo = sexo
+        self.email = email
+
+    def exibir_informacoes(self):
+        print(f"Nome: {self.nome}, Idade: {self.idade}, Email: {self.email}")
+
+#informações extras pessoa para cliente
+class Cliente(Pessoa):
+    def __init__(self, nome, idade, email, cpf):
+        super().__init__(nome, idade, email)
         self.cpf = cpf
 
-    def realizar_cadastro(self):
-        nome = input("Digite seu nome: ")
-        idade = int(input("Digite sua idade: "))
-        sexo = input("Digite seu sexo: ")
-        cpf = int(input("Digite seu CPF: "))
-        if idade < 18:
-            print("Cadastros permitidos apenas para maiores de 18 anos!")
-            if idade >= 18:
-                print(f"Cliente {Cliente.nome} cadastrado com sucesso!")
-        else:
-            print(f"Cliente {Cliente.nome} cadastrado com sucesso!")
-        self.nome = nome
-        self.idade = idade
-        self.sexo = sexo
-        self.cpf = cpf
-
-    def status(self):
-        print(f"Nome: {self.nome}")
-        print(f"Idade: {self.idade}")
-        print(f"Sexo: {self.sexo}")
+    def exibir_informacoes(self):
+        super().exibir_informacoes()
         print(f"CPF: {self.cpf}")
 
-    def atualizar_cadastro(self):
-        print("Para alterar os seus dados, insira os novos dados abaixo:")
-        nome = input("Digite seu nome: ")
-        idade = int(input("Digite sua idade: "))
-        sexo = input("Digite seu sexo: ")
-        cpf = int(input("Digite seu CPF: "))
-        if idade < 18:
-            print("Cadastros permitidos apenas para maiores de 18 anos!")
-            if idade >= 18:
-                print("Cliente atualizado com sucesso!")
-        else:
-            print(f"Cliente {cliente.nome} atualizado com sucesso!")
-        self.nome = nome
-        self.idade = idade
-        self.sexo = sexo
-        self.cpf = cpf
-
-import datetime
-class Checkin:
-
-    def __init__(self, nome, qntd_hospedes, cpf, data):
-        self.nome = nome
-        self.qntd_hospedes = qntd_hospedes
-        self.cpf = cpf
-        self.data = data
-        self.hospedes = []
-
-    def realizar_checkin(self):
-        nome = input("Digite seu nome: ")
-        qntd_hospedes = int(input("Digite a quantidade de hospedes: "))
-        cpf = input("Digite seu CPF: ")
-        data = input("Digite o dia da sua hospedagem dd/mmm/aaaa: ")
-        self.nome = nome
-        self.qntd_hospedes = qntd_hospedes
-        self.cpf = cpf
-        self.data = data
-        self.hospedes = []
-        if data == datetime.date.today().strftime("%d/%m/%Y"):
-            for i in range(self.qntd_hospedes):
-                nome_hospede = input("Digite o nome do hospede: ")
-                self.hospedes.append(nome_hospede)
-            print("Checkin realizado com sucesso!")
-            print("Nome do cliente:", self.nome)
-            print("Quantidade de hospedes:", self.qntd_hospedes)
-            print("CPF:", self.cpf)
-            print("Data do check-in:", self.data)
-            print("Hospedes:", self.hospedes)
-        else:
-            print(f"O check-in deve ser realizado no dia da hospedagem ({self.data})!\nCheck-in não realizado.")
-
-class Quarto:
-    def _init_(self, numero, tipo, preco_por_noite):
-        self.numero = numero
-        self.tipo = tipo
-        self.preco_por_noite = preco_por_noite
-    def calcular_custo_estadia(self, numero_de_noites):
-        return numero_de_noites * self.preco_por_noite
-
-    def __str__(self):
-        return f"Número do Quarto: {self.numero}, Tipo: {self.tipo}, Preço por Noite: {self.preco_por_noite}"
-
-class Funcionario:
-    def _init_(self, nome, cargo, numero_identificacao, salario):
-        self.nome = nome
+#informações extras pessoa para funcionario
+class Funcionario(Pessoa):
+    def __init__(self, nome, idade, email, cargo):
+        super().__init__(nome, idade, email)
         self.cargo = cargo
-        self.numero_identificacao = numero_identificacao
-        self.salario = salario
 
-class CheckOut:
-    def _init_(self, data_hora, cliente, quarto):
-        self.data_hora = data_hora
+    def exibir_informacoes(self):
+        super().exibir_informacoes()
+        print(f"Cargo: {self.cargo}")
+
+#define capacidade, preço e ocupação do quarto
+class Quarto:
+    def __init__(self, numero, capacidade, preco_diaria, nome):
+        self.numero = numero
+        self.capacidade = capacidade
+        self.preco_diaria = preco_diaria
+        self.nome = nome
+        self.ocupado = False
+
+    def ocupar_quarto(self):
+        self.ocupado = True
+
+    def desocupar_quarto(self):
+        self.ocupado = False
+
+    def esta_ocupado(self):
+        return self.ocupado
+
+#para reservar o quarto
+class Reserva:
+    def __init__(self, cliente, quarto, data_inicio, data_fim, cpf):
         self.cliente = cliente
         self.quarto = quarto
-    def __str__(self):
-        return f"Data e Hora: {self.data_hora}, Cliente: {self.cliente}, Quarto: {self.quarto}"
-    checkout_instance = CheckOut(data_hora, cliente, quarto)
-    print(checkout_instance)
+        self.data_inicio = data_inicio
+        self.data_fim = data_fim
+        self.checkout_realizado = False
+        self.cpf = cpf
 
+#exibe as informações quando o checkout é realizado
+    def realizar_checkout(self, cpf):
+        if not self.checkout_realizado and self.cpf == cpf:
+            fatura = Fatura(self)
+            fatura.calcular_valor_total()
+            fatura.exibir_fatura()
+            self.checkout_realizado = True
+            print("Checkout realizado com sucesso.")
+        else:
+            print("Reserva não encontrada ou já realizou checkout.")
 
-class ComentarioHotel:
-    def _init_(self, cliente, data, classificacao, comentario):
-        self.cliente = cliente
-        self.data = data
-        self.classificacao = classificacao
-        self.comentario = comentario
+#calcula o valor da estadia de acordo com o periodo da reserva
+class Fatura:
+    def __init__(self, reserva):
+        self.reserva = reserva
+        self.valor_total = 0
 
-class ServicoHotel:
-    def _init_(self, nome, horarios_funcionamento, custo_adicional):
-        self.nome = nome
-        self.horarios_funcionamento = horarios_funcionamento
-        self.custo_adicional = custo_adicional
-    def calcular_custo_total(self, custo_base):
-        return custo_base + self.custo_adicional
+    def calcular_valor_total(self):
+        dias = (pd.to_datetime(self.reserva.data_fim, format='%d-%m-%Y') -
+                pd.to_datetime(self.reserva.data_inicio, format='%d-%m-%Y')).days
+        self.valor_total = dias * self.reserva.quarto.preco_diaria
 
-    def __str__(self):
-        return f"Nome do Serviço: {self.nome}, Horários de Funcionamento: {self.horarios_funcionamento}, Custo Adicional: {self.custo_adicional}"
+    def exibir_fatura(self):
+        print(f"Fatura para {self.reserva.cliente.nome}")
+        print(f"Quarto: {self.reserva.quarto.nome}")
+        print(f"Data de Início: {self.reserva.data_inicio}, Data de Fim: {self.reserva.data_fim}")
+        print(f"Valor Total: R$ {self.valor_total:.2f}")
 
+#o cliente consegue avaliar os serviços do hotel
+class AvaliacaoServico:
+    def __init__(self, reserva, nota_atendimento, nota_limpeza, nota_conforto):
+        self.reserva = reserva
+        self.nota_atendimento = nota_atendimento
+        self.nota_limpeza = nota_limpeza
+        self.nota_conforto = nota_conforto
+
+    def exibir_avaliacao(self):
+        print(f"Avaliação para Reserva do cliente {self.reserva.cliente.nome}:")
+        print(f"Nota Atendimento: {self.nota_atendimento}")
+        print(f"Nota Limpeza: {self.nota_limpeza}")
+        print(f"Nota Conforto: {self.nota_conforto}")
+
+#para criar eventos que acontecerão nas instalaçoes do hotel
 class EventoHotel:
-    def _init_(self, nome, data, localizacao, detalhes):
+    def __init__(self, nome, data, descricao):
         self.nome = nome
         self.data = data
-        self.localizacao = localizacao
-        self.detalhes = detalhes
+        self.descricao = descricao
+
+    def exibir_informacoes(self):
+        print(f"Evento: {self.nome}")
+        print(f"Data: {self.data}")
+        print(f"Descrição: {self.descricao}")
+
+#para datar os pagamentos e salvá-los em arquivo ou caso queira poderá exibi-los na tela
+class HistoricoPagamentos:
+    def __init__(self):
+        self.pagamentos = []
+        self.filename_pagamentos = "pagamentos.csv"
+        self.carregar_pagamentos()
+
+    def carregar_pagamentos(self):
+        try:
+            df_pagamentos = pd.read_csv(self.filename_pagamentos)
+            for _, row in df_pagamentos.iterrows():
+                pagamento = {
+                    'Cliente': row['Cliente'],
+                    'Valor': row['Valor'],
+                    'Data': row['Data'],
+                }
+                self.pagamentos.append(pagamento)
+        except FileNotFoundError:
+            pass
+
+    def exportar_pagamentos_csv(self):
+        df_pagamentos = pd.DataFrame(self.pagamentos)
+        df_pagamentos.to_csv(self.filename_pagamentos, index=False)
+
+    def adicionar_pagamento(self, cliente, valor, data):
+        pagamento = {
+            'Cliente': cliente,
+            'Valor': valor,
+            'Data': data,
+        }
+        self.pagamentos.append(pagamento)
+        self.exportar_pagamentos_csv()
+
+    def exibir_pagamentos(self):
+        for pagamento in self.pagamentos:
+            print(f"Cliente: {pagamento['Cliente']}, Valor: R$ {pagamento['Valor']:.2f}, Data: {pagamento['Data']}")
+
+#classe controladora do programa
+class Hotel:
+    def __init__(self, nome):
+        self.nome = nome
+        self.clientes = []
+        self.funcionarios = []
+        self.quartos = self.criar_quartos_fixos()
+        self.reservas = []
+        self.eventos = []
+        self.filename_reservas = "reservas.csv"
+        self.filename_clientes = "clientes.csv"
+        self.filename_funcionarios = "funcionarios.csv"
+        self.filename_eventos = "eventos.csv"
+        self.carregar_clientes()
+        self.carregar_reservas()
+        self.carregar_funcionarios()
+        self.carregar_eventos()
+        self.historico_pagamentos = HistoricoPagamentos()
+
+    #para checar os clientes que se cadastraram anteriormente
+    def carregar_clientes(self):
+        try:
+            df_clientes = pd.read_csv(self.filename_clientes)
+            for _, row in df_clientes.iterrows():
+                if 'CPF' in df_clientes.columns:
+                    cliente = Cliente(row['Nome'], row['Idade'], row['Email'], row['CPF'])
+                else:
+                    cliente = Pessoa(row['Nome'], row['Idade'], row['Email'])
+                self.clientes.append(cliente)
+        except FileNotFoundError:
+            pass
+
+    # para checar as reservas que foram feitas anteriormente
+    def carregar_reservas(self):
+        try:
+            df_reservas = pd.read_csv(self.filename_reservas)
+            for _, row in df_reservas.iterrows():
+                cliente = next((c for c in self.clientes if isinstance(c, Cliente) and c.nome == row['Cliente']), None)
+                quarto = next((q for q in self.quartos if q.nome == row['Quarto']), None)
+                if cliente and quarto:
+                    reserva = Reserva(cliente, quarto, row['Data Início'], row['Data Fim'], row['CPF'])
+                    self.reservas.append(reserva)
+        except FileNotFoundError:
+            pass
+
+    # para checar os funcionarios que foram cadastrados anteriormente
+    def carregar_funcionarios(self):
+        try:
+            df_funcionarios = pd.read_csv(self.filename_funcionarios)
+            for _, row in df_funcionarios.iterrows():
+                funcionario = Funcionario(row['Nome'], row['Idade'], row['Email'], row['Cargo'])
+                self.funcionarios.append(funcionario)
+        except FileNotFoundError:
+            pass
+
+#salva todos clientes em um arquivo
+    def exportar_clientes_csv(self):
+        df_clientes = pd.DataFrame({
+            'Nome': [cliente.nome for cliente in self.clientes],
+            'Idade': [cliente.idade for cliente in self.clientes],
+            'Email': [cliente.email for cliente in self.clientes],
+            'CPF': [cliente.cpf for cliente in self.clientes] if isinstance(self.clientes[0], Cliente) else [""],
+        })
+        df_clientes.to_csv(self.filename_clientes, index=False)
+
+    # salva todas as reservas em um arquivo
+    def exportar_reservas_csv(self):
+        df_reservas = pd.DataFrame({
+            'Cliente': [reserva.cliente.nome for reserva in self.reservas],
+            'Quarto': [reserva.quarto.nome for reserva in self.reservas],
+            'Data Início': [reserva.data_inicio for reserva in self.reservas],
+            'Data Fim': [reserva.data_fim for reserva in self.reservas],
+            'CPF': [reserva.cpf for reserva in self.reservas],
+        })
+        df_reservas.to_csv(self.filename_reservas, index=False)
+
+    # salva todos os funcionarios em um arquivo
+    def exportar_funcionarios_csv(self):
+        df_funcionarios = pd.DataFrame({
+            'Nome': [funcionario.nome for funcionario in self.funcionarios],
+            'Idade': [funcionario.idade for funcionario in self.funcionarios],
+            'Email': [funcionario.email for funcionario in self.funcionarios],
+            'Cargo': [funcionario.cargo for funcionario in self.funcionarios],
+        })
+        df_funcionarios.to_csv(self.filename_funcionarios, index=False)
 
 
-quartosDisponiveis = [1, 2, 3, 4, 5]
-quartosIndisponiveis = []
+    def criar_quartos_fixos(self):
+        quartos = [
+            Quarto(numero=1, capacidade=2, preco_diaria=100.0, nome="1"),
+            Quarto(numero=2, capacidade=2, preco_diaria=100.0, nome="2"),
+            Quarto(numero=3, capacidade=4, preco_diaria=100.0, nome="3"),
+            Quarto(numero=4, capacidade=2, preco_diaria=100.0, nome="4"),
+            Quarto(numero=5, capacidade=2, preco_diaria=100.0, nome="5"),
+        ]
+        return quartos
+
+    def adicionar_cliente(self, cliente):
+        self.clientes.append(cliente)
+        self.exportar_clientes_csv()
+
+    def adicionar_funcionario(self, funcionario):
+        self.funcionarios.append(funcionario)
+        self.exportar_funcionarios_csv()
+
+    #checa se o quarto esta ocupado ou reserva para o cpf digitado
+    def fazer_reserva(self, cliente, quarto, data_inicio, data_fim):
+        if quarto.esta_ocupado():
+            print(f"Quarto {quarto.nome} já está ocupado para o período selecionado.")
+        else:
+            cpf = input("Digite o CPF do Cliente: ")
+            reserva = Reserva(cliente, quarto, data_inicio, data_fim, cpf)
+            quarto.ocupar_quarto()
+            self.reservas.append(reserva)
+            self.exportar_reservas_csv()
+            print(f"Reserva realizada com sucesso para o Quarto {quarto.nome}.")
+
+    def exibir_reservas(self):
+        for reserva in self.reservas:
+            print(f"Cliente: {reserva.cliente.nome}, "
+                  f"Quarto: {reserva.quarto.nome}, "
+                  f"Data de Início: {reserva.data_inicio}, Data de Fim: {reserva.data_fim}, "
+                  f"CPF: {reserva.cpf}")
 
 
+    def realizar_checkout(self, cpf):
+        for reserva in self.reservas:
+            if not reserva.checkout_realizado and reserva.cpf == cpf:
+                reserva.realizar_checkout(cpf)
+                # Atualizar o arquivo CSV após o checkout
+                self.exportar_reservas_csv()
+                return
+        print("Reserva não encontrada ou já realizou checkout.")
+
+    def remover_reserva(self, cliente_nome):
+        reservas_cliente = [reserva for reserva in self.reservas if reserva.cliente.nome == cliente_nome]
+
+        if not reservas_cliente:
+            print(f"Não há reservas para o cliente {cliente_nome}.")
+            return
+
+        for reserva in reservas_cliente:
+            print(f"Cliente: {reserva.cliente.nome}, "
+                  f"Quarto: {reserva.quarto.nome}, "
+                  f"Data de Início: {reserva.data_inicio}, Data de Fim: {reserva.data_fim}, "
+                  f"CPF: {reserva.cpf}")
+
+        quarto_nome = input("Digite o nome do Quarto da Reserva a ser removida: ")
+        reserva_encontrada = next((reserva for reserva in reservas_cliente if reserva.quarto.nome == quarto_nome), None)
+
+        if reserva_encontrada:
+            self.reservas.remove(reserva_encontrada)
+            reserva_encontrada.quarto.desocupar_quarto()
+            self.exportar_reservas_csv()
+            print("Reserva removida com sucesso.")
+        else:
+            print("Quarto não encontrado na reserva.")
+
+    def adicionar_avaliacao(self, reserva):
+        nota_atendimento = float(input("Digite a nota de atendimento (0 a 10): "))
+        nota_limpeza = float(input("Digite a nota de limpeza (0 a 10): "))
+        nota_conforto = float(input("Digite a nota de conforto (0 a 10): "))
+        avaliacao = AvaliacaoServico(reserva, nota_atendimento, nota_limpeza, nota_conforto)
+        avaliacao.exibir_avaliacao()
+
+    def carregar_eventos(self):
+        try:
+            df_eventos = pd.read_csv(self.filename_eventos)
+            for _, row in df_eventos.iterrows():
+                evento = EventoHotel(row['Nome'], row['Data'], row['Descrição'])
+                self.eventos.append(evento)
+        except FileNotFoundError:
+            pass
+
+    def exportar_eventos_csv(self):
+        df_eventos = pd.DataFrame({
+            'Nome': [evento.nome for evento in self.eventos],
+            'Data': [evento.data for evento in self.eventos],
+            'Descrição': [evento.descricao for evento in self.eventos],
+        })
+        df_eventos.to_csv(self.filename_eventos, index=False)
+
+    def adicionar_evento(self, evento):
+        self.eventos.append(evento)
+        self.exportar_eventos_csv()
+
+    def exibir_eventos(self):
+        for evento in self.eventos:
+            evento.exibir_informacoes()
+
+    def realizar_pagamento(self, cliente, valor, data):
+        self.historico_pagamentos.adicionar_pagamento(cliente, valor, data)
+        print("Pagamento realizado com sucesso.")
+
+    def exibir_historico_pagamentos(self):
+        self.historico_pagamentos.exibir_pagamentos()
+
+    def exibir_menu(self):
+        while True:
+            print("\n=== Menu ===")
+            print("1. Adicionar Cliente")
+            print("2. Adicionar Funcionário")
+            print("3. Fazer Reserva")
+            print("4. Remover Reserva")
+            print("5. Realizar Checkout por CPF")
+            print("6. Exibir Reservas")
+            print("7. Adicionar Avaliação de Serviço")
+            print("8. Adicionar Evento")
+            print("9. Exibir Eventos")
+            print("10. Realizar Pagamento")
+            print("11. Exibir Histórico de Pagamentos")
+            print("0. Sair")
+
+            opcao = input("Escolha uma opção: ")
+
+            if opcao == "1":
+                nome = input("Nome do Cliente: ")
+                idade = input("Idade do Cliente: ")
+                email = input("Email do Cliente: ")
+                cpf = input("CPF do Cliente: ")
+                cliente = Cliente(nome, idade, email, cpf)
+                self.adicionar_cliente(cliente)
+            elif opcao == "2":
+                nome = input("Nome do Funcionário: ")
+                idade = input("Idade do Funcionário: ")
+                email = input("Email do Funcionário: ")
+                cargo = input("Cargo do Funcionário: ")
+                funcionario = Funcionario(nome, idade, email, cargo)
+                self.adicionar_funcionario(funcionario)
+            elif opcao == "3":
+                cliente_nome = input("Nome do Cliente: ")
+                quarto_numero = input("Número do Quarto: ")
+                data_inicio = input("Data de Início da Reserva (dd-mm-aaaa): ")
+                data_fim = input("Data de Fim da Reserva (dd-mm-aaaa): ")
+                cliente = next((c for c in self.clientes if isinstance(c, Cliente) and c.nome == cliente_nome), None)
+                quarto = next((q for q in self.quartos if q.numero == int(quarto_numero)), None)
+                if cliente and quarto:
+                    self.fazer_reserva(cliente, quarto, data_inicio, data_fim)
+                else:
+                    print("Cliente ou Quarto não encontrado.")
+            elif opcao == "4":
+                cliente_nome = input("Nome do Cliente da Reserva a ser removida: ")
+                self.remover_reserva(cliente_nome)
+            elif opcao == "5":
+                cpf = input("Digite o CPF do Cliente para realizar o checkout: ")
+                self.realizar_checkout(cpf)
+            elif opcao == "6":
+                self.exibir_reservas()
+            elif opcao == "7":
+                cpf = input("Digite o CPF do cliente para adicionar a avaliação: ")
+                reserva = next((reserva for reserva in self.reservas if reserva.cpf == cpf), None)
+                if reserva:
+                    self.adicionar_avaliacao(reserva)
+                else:
+                    print("Reserva não encontrada para o CPF fornecido.")
+            elif opcao == "8":
+                nome = input("Digite o nome do evento: ")
+                data = input("Digite a data do evento (dd-mm-aaaa): ")
+                descricao = input("Digite a descrição do evento: ")
+                evento = EventoHotel(nome, data, descricao)
+                self.adicionar_evento(evento)
+                print("Evento adicionado com sucesso.")
+            elif opcao == "9":
+                self.exibir_eventos()
+            elif opcao == "10":
+                cliente = input("Digite o nome do cliente: ")
+                valor = float(input("Digite o valor do pagamento: "))
+                data = input("Digite a data do pagamento (dd-mm-aaaa): ")
+                self.realizar_pagamento(cliente, valor, data)
+            elif opcao == "11":
+                self.exibir_historico_pagamentos()
+            elif opcao == "0":
+                print("Saindo do programa. Até logo!")
+                break
+            else:
+                print("Opção inválida. Tente novamente.")
+
+hotel = Hotel("Hotel Bedroom Dreams")
+hotel.exibir_menu()
