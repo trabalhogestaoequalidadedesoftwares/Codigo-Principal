@@ -1,37 +1,43 @@
 class Hotel:
 
-    def __init__(self, nome, quartos_disponiveis):
-        self.nome = nome
+    def __init__(self, quartos_disponiveis):
         self.quartos_disponiveis = quartos_disponiveis
 
+    def is_quartosdisponiveis(self):
+        if len(quartosDisponiveis) == 0:
+            return True
+        else:
+            return False
+    
     def reservar_quarto(self, numero_quarto):
         if numero_quarto in self.quartos_disponiveis:
-            self.quartos_disponiveis.remove(numero_quarto)
+            quartosDisponiveis.remove(numero_quarto)
+            quartosIndisponiveis.append(numero_quarto)
             print("O quarto está disponível para reserva.")
-            reserva = str(input("Deseja reservar o quarto? S/N?"))
-            if reserva == ("S" and "s"):
+            reserva = str.lower(input("Deseja reservar o quarto? S/N? \n"))
+            if reserva == ("s"):
                 print("Quarto reservado com sucesso!")
             else:
                 print("Quarto não reservado.")
                 self.quartos_disponiveis.append(numero_quarto)
-                quartos.sort(key=int)
-
+                quartosDisponiveis.sort(key=int)
         else:
             print("O quarto não está disponível para ser reservado.")
-            quartos.sort(key=int)
+            quartosDisponiveis.sort(key=int)
 
     def liberar_quarto(self, numero_quarto):
-        if numero_quarto not in self.quartos_disponiveis:
-            self.quartos_disponiveis.append(numero_quarto)
-            numero = numero_quarto
-            print(f"O quarto {numero} foi liberado.")
-            quartos.sort(key=int)
+        if quartosDisponiveis.count(numero_quarto) and quartosIndisponiveis.count(numero_quarto) == 0: 
+            print("Não é possivel liberar um quarto que não exista nas nossas instalações")
+        elif numero_quarto in quartosIndisponiveis:
+            quartosIndisponiveis.remove(numero_quarto)
+            quartosDisponiveis.append(numero_quarto)
+            print(f"O quarto {numero_quarto} foi liberado.")
+            quartosDisponiveis.sort(key=int)
         else:
-            numero = numero_quarto
-            print(f"O quarto {numero} já está disponível para reserva.")
+            print(f"O quarto {numero_quarto} já está disponível para reserva.")
 
     def status(self):
-        print(f"O hotel {self.nome} tem {len(self.quartos_disponiveis)} quartos disponíveis.")
+        print(f"O hotel Bedroom Dreams tem {len(self.quartos_disponiveis)} quartos disponíveis.")
 
 class Cliente:
 
@@ -49,9 +55,9 @@ class Cliente:
         if idade < 18:
             print("Cadastros permitidos apenas para maiores de 18 anos!")
             if idade >= 18:
-                print(f"Cliente {cliente.nome} cadastrado com sucesso!")
+                print(f"Cliente {Cliente.nome} cadastrado com sucesso!")
         else:
-            print(f"Cliente {cliente.nome} cadastrado com sucesso!")
+            print(f"Cliente {Cliente.nome} cadastrado com sucesso!")
         self.nome = nome
         self.idade = idade
         self.sexo = sexo
@@ -113,9 +119,62 @@ class Checkin:
         else:
             print(f"O check-in deve ser realizado no dia da hospedagem ({self.data})!\nCheck-in não realizado.")
 
+class Quarto:
+    def _init_(self, numero, tipo, preco_por_noite):
+        self.numero = numero
+        self.tipo = tipo
+        self.preco_por_noite = preco_por_noite
+    def calcular_custo_estadia(self, numero_de_noites):
+        return numero_de_noites * self.preco_por_noite
+
+    def __str__(self):
+        return f"Número do Quarto: {self.numero}, Tipo: {self.tipo}, Preço por Noite: {self.preco_por_noite}"
+
+class Funcionario:
+    def _init_(self, nome, cargo, numero_identificacao, salario):
+        self.nome = nome
+        self.cargo = cargo
+        self.numero_identificacao = numero_identificacao
+        self.salario = salario
+
+class CheckOut:
+    def _init_(self, data_hora, cliente, quarto):
+        self.data_hora = data_hora
+        self.cliente = cliente
+        self.quarto = quarto
+    def __str__(self):
+        return f"Data e Hora: {self.data_hora}, Cliente: {self.cliente}, Quarto: {self.quarto}"
+    checkout_instance = CheckOut(data_hora, cliente, quarto)
+    print(checkout_instance)
 
 
+class ComentarioHotel:
+    def _init_(self, cliente, data, classificacao, comentario):
+        self.cliente = cliente
+        self.data = data
+        self.classificacao = classificacao
+        self.comentario = comentario
+
+class ServicoHotel:
+    def _init_(self, nome, horarios_funcionamento, custo_adicional):
+        self.nome = nome
+        self.horarios_funcionamento = horarios_funcionamento
+        self.custo_adicional = custo_adicional
+    def calcular_custo_total(self, custo_base):
+        return custo_base + self.custo_adicional
+
+    def __str__(self):
+        return f"Nome do Serviço: {self.nome}, Horários de Funcionamento: {self.horarios_funcionamento}, Custo Adicional: {self.custo_adicional}"
+
+class EventoHotel:
+    def _init_(self, nome, data, localizacao, detalhes):
+        self.nome = nome
+        self.data = data
+        self.localizacao = localizacao
+        self.detalhes = detalhes
 
 
+quartosDisponiveis = [1, 2, 3, 4, 5]
+quartosIndisponiveis = []
 
 
